@@ -4,7 +4,8 @@
 # Maintainer: Truocolo <truocolo@aol.com>
 # Contributor: Filipe Bertelli <filipebertelli@tutanota.com>
 
-_source='npm'
+_offline='false'
+_source='ur'
 _ns="NomicFoundation"
 _pub="@nomicfoundation"
 _os="$( \
@@ -22,13 +23,13 @@ _pkgdesc=(
   'and returns its imports and version pragmas'
 )
 pkgdesc="${_pkgdesc[*]}"
-pkgver=0.1.2
-_commit="925641061bd7fc0cfac07395353c14147f29e1d0"
+pkgver=0.1.2.1.1
+_commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
 pkgrel=1
 arch=(
   'any'
 )
-if [[ "${_source}"= = "ur" ]]; then
+if [[ "${_source}" == "ur" ]]; then
   _ns="themartiancompany"
 fi
 url="https://github.com/${_ns}/${_pkgbase}"
@@ -43,22 +44,28 @@ makedepends=(
 )
 source=(
 )
-sha512sums=(
+sha256sums=(
 )
-if [[ "${_source}"= = "ur" ]]; then
+_url="${url}"
+_tag="${_commit}"
+_tag_name="commit"
+_tarname="${pkgname}-${_tag}"
+[[ "${_offline}" == "true" ]] && \
+  _url="file://${HOME}/${pkgname}"
+if [[ "${_source}" == "ur" ]]; then
   _tar="${_tarname}.zip::${_url}/archive/${_commit}.zip"
   source+=(
     "${_tar}"
   )
-  sha512sums+=(
-    'ab89f7dbf14d288850df34061b0e42bcf17a193bc30a963021fedb118fdd65365b81f0ec1f28c9c144715097f7550bae263f9f0c8165e3e2a40556f0e047fa8c'
+  sha256sums+=(
+    'b120221d13b9310b68d01238b2274d32db928685cfcbbbf4a5c0a667e1bca4d1'
   )
-elif [[ "${_source}"= = "npm" ]]; then
+elif [[ "${_source}" == "npm" ]]; then
   _npm="http://registry.npmjs.org"
   source+=(
     "${_npm}/${_pub}/${_pkgbase}/-/${_pkgbase}-${pkgver}.tgz"
   )
-  sha512sums+=(
+  sha256sums+=(
     'ab89f7dbf14d288850df34061b0e42bcf17a193bc30a963021fedb118fdd65365b81f0ec1f28c9c144715097f7550bae263f9f0c8165e3e2a40556f0e047fa8c'
   )
   noextract=(
@@ -66,6 +73,69 @@ elif [[ "${_source}"= = "npm" ]]; then
   )
 fi
 
+prepare() {
+  local \
+    _tools_bin \
+    _clang \
+    _compiler_dir \
+    _compiler
+  cd \
+    "${srcdir}/${_tarname}"
+  if [[ "${_os}" == "Android" ]] && \
+     [[ "${_arch}" == "armv7l" ]]; then
+    _clang="$( \
+      command \
+        -v \
+        clang)"
+    _tools_bin="undefined/toolchains/llvm/prebuilt/linux-x86_64/bin"
+    _compiler_dir="${srcdir}/${_tarname}/${_tools_bin}"
+    _compiler="${_compiler_dir}/armv7a-linux-androideabi24-clang"
+    mkdir \
+      -p \
+      "${_compiler_dir}"
+    ln \
+      -s \
+      "${_clang}" \
+      "${_compiler}" || \
+      true
+  fi
+}
+
+build() {
+  cd \
+    "${srcdir}/${_tarname}"
+  npm \
+    install \
+    . || \
+    true
+  yarn || \
+    true
+  npm \
+    install \
+    . || \
+    true
+  yarn \
+    install || \
+    true
+  yarn \
+    run \
+      build
+  if [[ "${_os}" == "Android" ]] && \
+     [[ "${_arch}" == "armv7l" ]]; then
+    mv \
+      "solidity-analyzer.${_platform}.node" \
+      "npm/${_platform}" || \
+      true
+    cd \
+      "npm/${_platform}"
+    npm \
+      pack
+    cd \
+      "${srcdir}/${_tarname}"
+  fi
+  npm \
+    pack
+}
 
 package() {
   local \
@@ -76,33 +146,25 @@ package() {
     # --user=root
     --prefix="${pkgdir}/usr"
   )
-  if [[ "${_source}" == "npm" ]]; then
-    _tgz="${srcdir}/${_pkgbase}-${pkgver}.tgz"
-  elif [[ "${_source}" == "ur" ]]; then
+  cd \
+    "${srcdir}/${_tarname}"
+  if [[ "${_os}" == "Android" ]] && \
+     [[ "${_arch}" == "armv7l" ]]; then
     cd \
-      ${pkgbase}
+      "npm/${_platform}"
+    _tgz="${_pub}-${_pkg}-${_platform}-${_pkgver}.tgz"
     npm \
-      pack
-    _tgz="$( \
-      ls \
-        *.tgz)"
+      install \
+        "${_npm_options[@]}" \
+        "${_tgz}"
+    cd \
+      "${srcdir}/${_tarname}"
   fi
+  _tgz="${_pub}-${_pkg}-${_pkgver}.tgz"
   npm \
     install \
       "${_npm_options[@]}" \
       "${_tgz}"
-  rm \
-    -fr \
-      "${pkgdir}/usr/etc"
-  # Fix npm derp
-  find \
-    "${pkgdir}/usr" \
-    -type d \
-    -exec \
-      chmod \
-        755 \
-	'{}' \
-	+
 }
 
 # vim:set sw=2 sts=-1 et:
