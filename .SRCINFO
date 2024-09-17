@@ -1,0 +1,15 @@
+pkgbase = solidity-analyzer
+	pkgdesc = API library built in Rust, which exposes a single function, which takes the contents of a Solidity source file and returns its imports and version pragmas
+	pkgver = 0.1.2
+	pkgrel = 1
+	url = https://github.com/NomicFoundation/solidity-analyzer
+	arch = any
+	license = custom
+	makedepends = npm
+	depends = nodejs
+	depends = inherits
+	noextract = solidity-analyzer-0.1.2.tgz
+	source = http://registry.npmjs.org/@nomicfoundation/solidity-analyzer/-/solidity-analyzer-0.1.2.tgz
+	sha512sums = ab89f7dbf14d288850df34061b0e42bcf17a193bc30a963021fedb118fdd65365b81f0ec1f28c9c144715097f7550bae263f9f0c8165e3e2a40556f0e047fa8c
+
+pkgname = solidity-analyzer
