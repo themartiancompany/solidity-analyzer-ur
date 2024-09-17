@@ -57,8 +57,9 @@ if [[ "${_source}" == "ur" ]]; then
   source+=(
     "${_tar}"
   )
+  _sum="31a540388e9fd4e54e6a5c7ef0ff8ed042a404994519212e2524a93a2a282254"
   sha256sums+=(
-    'b120221d13b9310b68d01238b2274d32db928685cfcbbbf4a5c0a667e1bca4d1'
+    "${_sum}"
   )
 elif [[ "${_source}" == "npm" ]]; then
   _npm="http://registry.npmjs.org"

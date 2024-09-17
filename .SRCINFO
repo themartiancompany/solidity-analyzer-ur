@@ -8,6 +8,6 @@ pkgbase = solidity-analyzer
 	makedepends = npm
 	depends = nodejs
 	source = solidity-analyzer-55a88c2957de8f93af3bb135187fc2c7a0973291.zip::https://github.com/themartiancompany/solidity-analyzer/archive/55a88c2957de8f93af3bb135187fc2c7a0973291.zip
-	sha256sums = b120221d13b9310b68d01238b2274d32db928685cfcbbbf4a5c0a667e1bca4d1
+	sha256sums = 31a540388e9fd4e54e6a5c7ef0ff8ed042a404994519212e2524a93a2a282254
 
 pkgname = solidity-analyzer
