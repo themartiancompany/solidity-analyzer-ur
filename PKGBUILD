@@ -56,6 +56,7 @@ depends=(
 )
 makedepends=(
   'npm'
+  'rust'
   'yarn'
 )
 provides=(
