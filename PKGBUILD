@@ -117,10 +117,10 @@ arch=(
   'powerpc'
   'pentium4'
 )
-if [[ "${_source}" == "ur" ]]; then
+if [[ "${_pub}" == "themartiancompany" ]]; then
   _ns="themartiancompany"
 fi
-url="https://github.com/${_ns}/${_pkgbase}"
+url="https://${_git_service}.com/${_ns}/${_pkgbase}"
 license=(
   'custom'
 )
