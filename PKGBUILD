@@ -62,6 +62,7 @@ if [[ ! -v "_offline" ]]; then
 fi
 if [[ ! -v "_publisher" ]]; then
   _pub="nomicfoundation"
+  _pub="themartiancompany"
   if [[ "${_os}" == "Android" ]]; then
     _pub="themartiancompany"
   fi
@@ -107,7 +108,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1"
 _commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
-pkgrel=1
+pkgrel=2
 arch=(
   'x86_64'
   'arm'
