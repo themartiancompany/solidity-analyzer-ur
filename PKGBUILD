@@ -159,8 +159,14 @@ _tarfile="${_tarname}.${_archive_format}"
 if [[ "${_offline}" == "true" ]]; then
   _url="file://${HOME}/${pkgname}"
 fi
+_gitlab_sum="SKIP"
+_gitlab_sig_sum="SKIP"
 _github_sum="31a540388e9fd4e54e6a5c7ef0ff8ed042a404994519212e2524a93a2a282254"
 _github_sig_sum="759ca10e04885ad220ec4856fdb6a54a2cdad02442b9c3519b4a6a656c96b54e"
+if [[ "${_git_service}" == "github" ]]; then
+  _evmfs_sum="${_github_sum}"
+  _evmfs_sig_sum="${_github_sig_sum}"
+fi
 _npm_sum="SKIP"
 _npm_sig_sum="SKIP"
 # Truocolo
@@ -170,13 +176,13 @@ _evmfs_ns="0x87003Bd6C074C713783df04f36517451fF34CBEf"
 _evmfs_network="100"
 _evmfs_address="0x69470b18f8b8b5f92b48f6199dcb147b4be96571"
 _evmfs_dir="evmfs://${_evmfs_network}/${_evmfs_address}/${_evmfs_ns}"
-_evmfs_uri="${_evmfs_dir}/${_sum}"
+_evmfs_uri="${_evmfs_dir}/${_evmfs_sum}"
 _evmfs_src="${_tarfile}::${_evmfs_uri}"
 _bundle_uri="${_evmfs_dir}/${_bundle_sum}"
 _bundle_src="${_tarfile}::${_bundle_uri}"
 _evmfs_npm_uri="${_evmfs_dir}/${_npm_sum}"
 _evmfs_npm_src="${_tarfile}::${_evmfs_npm_uri}"
-_evmfs_sig_uri="${_evmfs_dir}/${_sig_sum}"
+_evmfs_sig_uri="${_evmfs_dir}/${_evmfs_sig_sum}"
 _evmfs_sig_src="${_tarfile}.sig::${_evmfs_sig_uri}"
 _bundle_sig_uri="${_evmfs_dir}/${_bundle_sig_sum}"
 _bundle_sig_src="${_tarfile}.sig::${_bundle_sig_uri}"
@@ -198,6 +204,10 @@ if [[ "${_evmfs}" == "true" ]]; then
       _sig_src="${_bundle_sig_src}"
       _sig_sum="${_bundle_sig_sum}"
     elif [[ "${_git}" == "false" ]]; then
+      if [[ "${_git_service}" == "github" ]]; then
+        _sum="${_github_sum}"
+        _sig_sum="${_github_sig_sum}"
+      fi
       _uri="${_evmfs_uri}"
       _sig_src="${_evmfs_sig_src}"
     fi
