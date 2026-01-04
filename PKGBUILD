@@ -109,7 +109,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1"
 _commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
-pkgrel=2
+pkgrel=3
 arch=(
   'x86_64'
   'arm'
@@ -305,8 +305,6 @@ build() {
     install || \
     true
   _android_quirk
-  echo \
-    "$(pwd)"
   yarn \
     run \
       build
