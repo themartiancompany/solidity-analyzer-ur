@@ -60,15 +60,16 @@ fi
 if [[ ! -v "_offline" ]]; then
   _offline='false'
 fi
-if [[ ! -v "_publisher" ]]; then
+if [[ ! -v "_pub" ]]; then
   _pub="nomicfoundation"
-  _pub="themartiancompany"
   if [[ "${_os}" == "Android" ]]; then
-    _pub="themartiancompany"
+    _pub="nomicfoundation"
   fi
 fi
 if [[ ! -v "_ns" ]]; then
   _ns="NomicFoundation"
+  # Android support
+  _ns="themartiancompany"
 fi
 if [[ "${_os}" == "Android" ]]; then
   if [[ "${_arch}" == "armv7l" ]]; then
@@ -118,9 +119,6 @@ arch=(
   'powerpc'
   'pentium4'
 )
-if [[ "${_pub}" == "themartiancompany" ]]; then
-  _ns="themartiancompany"
-fi
 url="https://${_git_service}.com/${_ns}/${_pkgbase}"
 license=(
   'custom'
