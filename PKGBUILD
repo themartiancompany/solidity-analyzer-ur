@@ -121,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1"
 _commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
-pkgrel=5
+pkgrel=6
 arch=(
   'x86_64'
   'arm'
@@ -239,9 +239,23 @@ elif [[ "${_evmfs}" == "false" ]]; then
     _uri="${_npm_http}/@${_ns}/${_pkg}/-/${_tarfile}"
     _sum="${_npm_sum}"
   elif [[ "${_npm}" == "false" ]]; then
-    if [[ "${_git_service}" == "github" ]]; then
-      _uri="${_url}/archive/${_commit}.${_archive_format}"
-      _sum="${_github_sum}"
+    if [[ "${_git}" == true ]]; then
+      _src="${_tarname}::git+${_url}#${_tag_name}=${_tag}?signed"
+      _sum="SKIP"
+    elif [[ "${_git}" == false ]]; then
+      _uri=""
+      if [[ "${_git_service}" == "github" ]]; then
+        if [[ "${_tag_name}" == "commit" ]]; then
+          _uri="${_url}/archive/${_commit}.${_archive_format}"
+          _sum="${_github_sum}"
+        fi
+      elif [[ "${_git_service}" == "gitlab" ]]; then
+        if [[ "${_tag_name}" == "commit" ]]; then
+          _uri="${_url}/-/archive/${_tag}/${_tag}.${_archive_format}"
+          _sum="${_gitlab_sum}"
+        fi
+      fi
+      _src="${_tarfile}::${_uri}"
     fi
   fi
 fi
