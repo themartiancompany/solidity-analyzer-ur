@@ -48,14 +48,26 @@ if [[ ! -v "_evmfs" ]]; then
     _evmfs="false"
   fi
 fi
-if [[ ! -v "_git" ]]; then
-  _git="false"
-fi
 if [[ ! -v "_npm" ]]; then
-  _npm="false"
+  if [[ "${_evmfs}" == "true" ]]; then
+    _npm="false"
+  elif [[ "${_evmfs}" == "false" ]]; then
+    _npm="false"
+  fi
+fi
+if [[ ! -v "_git" ]]; then
+  if [[ "${_evmfs}" == "false" ]]; then
+    _git="false"
+  elif [[ "${_evmfs}" == "true" ]]; then
+    _git="false"
+  fi
 fi
 if [[ ! -v "_git_service" ]]; then
-  _git_service="github"
+  if [[ "${_evmfs}" == "false" ]]; then
+    _git_service="gitlab"
+  elif [[ "${_evmfs}" == "true" ]]; then
+    _git_service="github"
+  fi
 fi
 if [[ ! -v "_offline" ]]; then
   _offline='false'
@@ -109,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1"
 _commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
-pkgrel=4
+pkgrel=5
 arch=(
   'x86_64'
   'arm'
