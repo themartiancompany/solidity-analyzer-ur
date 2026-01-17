@@ -179,6 +179,9 @@ _github_sig_sum="759ca10e04885ad220ec4856fdb6a54a2cdad02442b9c3519b4a6a656c96b54
 if [[ "${_git_service}" == "github" ]]; then
   _evmfs_sum="${_github_sum}"
   _evmfs_sig_sum="${_github_sig_sum}"
+elif [[ "${_git_service}" == "gitlab" ]]; then
+  _evmfs_sum="${_gitlab_sum}"
+  _evmfs_sig_sum="${_gitlab_sig_sum}"
 fi
 _npm_sum="SKIP"
 _npm_sig_sum="SKIP"
