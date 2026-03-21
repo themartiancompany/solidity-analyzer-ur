@@ -828,6 +828,14 @@ jobs:
       - name:
           Installs build dependencies.
         run: |
+          /entrypoint.sh \
+            pacman \
+              -S \
+                --noconfirm \
+                rust \
+                yarn \
+                --overwrite="*" || \
+              true
           _evmfs="false" \
             recipe-get \
               -o \
