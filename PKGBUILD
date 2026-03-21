@@ -121,15 +121,17 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1"
 _commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
-pkgrel=7
+pkgrel=8
 arch=(
-  'x86_64'
-  'arm'
   'aarch64'
+  'arm'
+  'armv8l'
+  'armv7l'
   'i686'
   'mips'
   'powerpc'
   'pentium4'
+  'x86_64'
 )
 url="https://${_git_service}.com/${_ns}/${_pkgbase}"
 license=(
@@ -139,14 +141,10 @@ depends=(
   "${_node}"
 )
 makedepends=(
+  'npm'
   'rust'
   'yarn'
 )
-if [[ "${_os}" != "Android" ]]; then
-  makedepends+=(
-    'npm'
-  )
-fi
 provides=(
   "${_node}-${_pkg}=${pkgver}"
 )
