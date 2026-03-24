@@ -142,7 +142,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=30
+pkgrel=31
 arch=(
   'aarch64'
   'arm'
@@ -443,15 +443,17 @@ build() {
     if [[ -e "yarn.lock" ]]; then
       rm \
         "yarn.lock"
+      echo \
+        "Yarn lock file update."
+      "${_yarn[@]}" \
+        up || \
+      true
     fi
   fi
   "${_yarn[@]}" \
     run \
       build || \
-  ( ( rm \
-        "yarn.lock" || \
-        true ) && \
-      "${_yarn[@]}" \
+  ( "${_yarn[@]}" \
       install && \
     "${_yarn[@]}" \
       run \
