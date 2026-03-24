@@ -121,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=15
+pkgrel=16
 arch=(
   'aarch64'
   'arm'
@@ -366,7 +366,7 @@ build() {
   if [[ "${_yarn[*]}" == "" ]]; then
     npm \
       install \
-      yarn || \
+        "yarn" || \
       true
     _yarn=(
       npx
@@ -378,7 +378,7 @@ build() {
     true
   npm \
     install \
-    . || \
+    --package-lock-only || \
     true
   _android_quirk
   "${_yarn[@]}" \
