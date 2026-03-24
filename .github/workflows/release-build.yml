@@ -1683,7 +1683,7 @@ jobs:
               _git_service="github" \
               recipe-get \
                 "PKGBUILD" \
-                "pkgbase")"
+                "pkgbase")" && \
           su \
             -c \
               "cd ${PWD} && _evmfs="false" _git_service="github" reallymakepkg -v -u -w '/home/user/${_pkgbase}-build' -- -df --nocheck --skippgpcheck && ls -lsh" - \

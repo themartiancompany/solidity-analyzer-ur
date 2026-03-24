@@ -121,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=17
+pkgrel=18
 arch=(
   'aarch64'
   'arm'
@@ -383,7 +383,12 @@ build() {
   _android_quirk
   "${_yarn[@]}" \
     run \
-      build
+      build || \
+  ( "${_yarn[@]}" \
+      install && \
+    "${_yarn[@]}" \
+      run \
+        build )
   if [[ "${_os}" == "Android" ]] && \
      [[ "${_arch}" == "armv7l" ]]; then
     mv \
