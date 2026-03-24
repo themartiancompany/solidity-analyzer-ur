@@ -142,7 +142,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=27
+pkgrel=28
 arch=(
   'aarch64'
   'arm'
@@ -439,10 +439,19 @@ build() {
     --package-lock-only || \
     true
   _android_quirk
+  if [[ "${_os}" == "Msys" ]]; then
+    if [[ -e "yarn.lock" ]]; then
+      rm \
+        "yarn.lock"
+    fi
+  fi
   "${_yarn[@]}" \
     run \
       build || \
-  ( "${_yarn[@]}" \
+  ( rm \
+      -r \
+      "yarn.lock" && \
+      "${_yarn[@]}" \
       install && \
     "${_yarn[@]}" \
       run \
