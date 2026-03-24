@@ -913,15 +913,15 @@ jobs:
             _arch="arm"; \
           fi && \
           /entrypoint.sh \
-            arch="${_arch}" \
             TERMUX_VERSION=50 \
+            arch="${_arch}" \
             _evmfs="false" \
             _git="false" \
             _git_service="github" \
             recipe-get \
               -v \
               "PKGBUILD" \
-              "source"
+              "source" && \
           /entrypoint.sh \
             arch="${_arch}" \
             TERMUX_VERSION=50 \

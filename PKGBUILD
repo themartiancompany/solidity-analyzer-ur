@@ -84,17 +84,27 @@ if [[ ! -v "_ns" ]]; then
   # Android support
   _ns="themartiancompany"
 fi
-if [[ "${_os}" == "Android" ]]; then
-  if [[ "${_arch}" == "armv7l" ]]; then
-    _platform="android-arm-eabi"
-  fi
-elif [[ "${_os}" == "GNU/Linux" ]]; then
-  if [[ "${_arch}" == "x86_64" ]]; then
-    _platform="gnu"
-  fi
-elif [[ "${_os}" == "Msys" ]]; then
-  if [[ "${_arch}" == "x86_64" ]]; then
-    _platform="windows"
+if [[ ! -v "_platform" ]]; then
+  if [[ "${_os}" == "Android" ]]; then
+    elif [[ "${_arch}" == "aarch64" ]]; then
+      _platform="android-arm-eabi"
+    if [[ "${_arch}" == "armv8l" ]]; then
+      _platform="android-aarch64"
+    if [[ "${_arch}" == "armv7l" ]]; then
+      _platform="android-arm-eabi"
+    elif [[ "${_arch}" == "i686" ]]; then
+      _platform="android-x86_64"
+    elif [[ "${_arch}" == "x86_64" ]]; then
+      _platform="android-x86_64"
+    fi
+  elif [[ "${_os}" == "GNU/Linux" ]]; then
+    if [[ "${_arch}" == "x86_64" ]]; then
+      _platform="gnu-x86_64"
+    fi
+  elif [[ "${_os}" == "Msys" ]]; then
+    if [[ "${_arch}" == "x86_64" ]]; then
+      _platform="windows-x86_64"
+    fi
   fi
 fi
 if [[ ! -v "_archive_format" ]]; then
@@ -130,7 +140,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=20
+pkgrel=21
 arch=(
   'aarch64'
   'arm'
@@ -298,15 +308,19 @@ _android_quirk() {
     _compiler
   cd \
     "${srcdir}/${_tarname}"
-  if [[ "${_os}" == "Android" ]] && \
-     [[ "${_arch}" == "armv7l" ]]; then
+  if [[ "${_os}" == "Android" ]]; then
+    _tools_bin="undefined/toolchains/llvm/prebuilt/linux-x86_64/bin"
+    _compiler_dir="${srcdir}/${_tarname}/${_tools_bin}"
+    if [[ "${_arch}" == "aarch64"  ]]; then
+      _compiler="${_compiler_dir}/${_arch}-linux-android24-clang"
+    elif [[ "${_arch}" == "armv7l" || \
+          "${_arch}" == "armv8l" ]]; then
+      _compiler="${_compiler_dir}/armv7a-linux-androideabi24-clang"
+    fi
     _clang="$( \
       command \
         -v \
-        clang)"
-    _tools_bin="undefined/toolchains/llvm/prebuilt/linux-x86_64/bin"
-    _compiler_dir="${srcdir}/${_tarname}/${_tools_bin}"
-    _compiler="${_compiler_dir}/armv7a-linux-androideabi24-clang"
+        "clang")"
     mkdir \
       -p \
       "${_compiler_dir}"
