@@ -64,7 +64,7 @@ if [[ ! -v "_git" ]]; then
 fi
 if [[ ! -v "_git_service" ]]; then
   if [[ "${_evmfs}" == "false" ]]; then
-    _git_service="gitlab"
+    _git_service="github"
   elif [[ "${_evmfs}" == "true" ]]; then
     _git_service="github"
   fi
@@ -121,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1"
 _commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
-pkgrel=10
+pkgrel=11
 arch=(
   'aarch64'
   'arm'
@@ -316,23 +316,38 @@ prepare() {
 }
 
 build() {
+  local \
+    _yarn
+  _yarn=( "$(
+    command \
+      -v \
+      "yarn" || \
+    true)"
+  )
   cd \
     "${srcdir}/${_tarname}"
   npm \
     install \
     . || \
     true
-  yarn || \
+  if [[ "${_yarn[*]}" == "" ]]; then
+    npm \
+      install \
+      yarn || \
+      true
+    _yarn=(
+      npx
+        "yarn"
+    )
+  fi
+  "${yarn[@]}" || \
     true
   npm \
     install \
     . || \
     true
-  yarn \
-    install || \
-    true
   _android_quirk
-  yarn \
+  "${_yarn[@]}" \
     run \
       build
   if [[ "${_os}" == "Android" ]] && \
