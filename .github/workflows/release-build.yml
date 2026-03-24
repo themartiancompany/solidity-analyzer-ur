@@ -895,7 +895,7 @@ jobs:
             recipe-get \
               -v \
               "PKGBUILD" \
-              "pkgbase")"
+              "pkgbase"
           export \
             _arch="$( \
               uname \
