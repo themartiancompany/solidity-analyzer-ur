@@ -86,11 +86,11 @@ if [[ ! -v "_ns" ]]; then
 fi
 if [[ ! -v "_platform" ]]; then
   if [[ "${_os}" == "Android" ]]; then
-    elif [[ "${_arch}" == "aarch64" ]]; then
+    if [[ "${_arch}" == "aarch64" ]]; then
       _platform="android-arm-eabi"
-    if [[ "${_arch}" == "armv8l" ]]; then
+    elif [[ "${_arch}" == "armv8l" ]]; then
       _platform="android-aarch64"
-    if [[ "${_arch}" == "armv7l" ]]; then
+    elif [[ "${_arch}" == "armv7l" ]]; then
       _platform="android-arm-eabi"
     elif [[ "${_arch}" == "i686" ]]; then
       _platform="android-x86_64"
