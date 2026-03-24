@@ -141,13 +141,18 @@ jobs:
             "o+x" \
             "${PREFIX}/bin"
       - name:
-          Installs bionic-libc NodeJS to force compatibility with actions/checkout and actions/upload-artifact.
+          Installs bionic-libc NodeJS and Yarn to force compatibility with actions/checkout and actions/upload-artifact.
         run: |
           /entrypoint.sh \
             pkg \
               install \
                 -y \
                 "nodejs-lts"
+          /entrypoint.sh \
+            pkg \
+              install \
+                -y \
+                "yarn"
           ln \
             -sf \
             "${PREFIX}/bin" \
@@ -1079,7 +1084,7 @@ jobs:
           pacman \
             -S \
             --noconfirm \
-              "nodejs-lts"
+              "nodejs-lts-jod"
           ln \
             -sf \
             "${PREFIX}/bin" \
@@ -1097,7 +1102,8 @@ jobs:
             "python-docutils" \
             "python-pip" \
             "python-build" \
-            "tree"
+            "tree" \
+            "yarn"
       - uses:
           actions/checkout@v4.2.2
       - name:
