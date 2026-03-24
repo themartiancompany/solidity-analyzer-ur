@@ -119,8 +119,8 @@ _pkgdesc=(
 )
 pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
-pkgver="${_pkgver}.1.1"
-_commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
+pkgver="${_pkgver}.1.1.1"
+_commit="a45f6027efccc03125160aff83e582f37a3f11c0"
 pkgrel=13
 arch=(
   'aarch64'
@@ -310,6 +310,38 @@ _android_quirk() {
   cd \
     "${srcdir}/${_tarname}"
 }
+
+_msys_quirk() {
+  local \
+    _tools_bin \
+    _clang \
+    _compiler_dir \
+    _compiler
+  cd \
+    "${srcdir}/${_tarname}"
+  if [[ "${_os}" == "Android" ]] && \
+     [[ "${_arch}" == "armv7l" ]]; then
+    _clang="$( \
+      command \
+        -v \
+        gcc)"
+    _tools_bin="undefined/toolchains/llvm/prebuilt/linux-x86_64/bin"
+    _compiler_dir="${srcdir}/${_tarname}/${_tools_bin}"
+    _compiler="${_compiler_dir}/armv7a-linux-androideabi24-clang"
+    mkdir \
+      -p \
+      "${_compiler_dir}"
+    ln \
+      -s \
+      "${_clang}" \
+      "${_compiler}" || \
+      true
+  fi
+  cd \
+    "${srcdir}/${_tarname}"
+}
+
+
 
 prepare() {
   _android_quirk
