@@ -140,10 +140,9 @@ _pkgdesc=(
 )
 pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
-_binary_pkgver="0.1.1"
-pkgver="${_pkgver}.1.1.1.1.1.1.1"
-_commit="e05173b7b93c5636d832cb52a00704b5a0f2d142"
-pkgrel=3
+pkgver="${_pkgver}.1.1.1.1.1.1.1.1.1"
+_commit="74afb6ee8704d93eb90af8dfc493aaab04cf52a4"
+pkgrel=1
 arch=(
   'aarch64'
   'arm'
@@ -204,8 +203,8 @@ _bundle_sum="SKIP"
 _bundle_sig_sum="SKIP"
 _gitlab_sum="SKIP"
 _gitlab_sig_sum="SKIP"
-_github_sum="5aeb2fb1523ff4e2fbeb1963f10f4fa44624609600ea51e68c47e3341c9e48c9"
-_github_sig_sum="65a947acd46dd65b6cd9d31657a3ef7462ecd66920fef6ff6a2451e7dffee60c"
+_github_sum="c17edb6c8378d2b29237755ead8e5a7c3f369697cd391d018bceeadcf6f426ff"
+_github_sig_sum="4e8c7c0d7b5156aa2c0c2036438d4fff83f99bf260cb2ddeb006ad132e6d365f"
 if [[ "${_git_service}" == "github" ]]; then
   _evmfs_sum="${_github_sum}"
   _evmfs_sig_sum="${_github_sig_sum}"
@@ -378,8 +377,6 @@ _msys_quirk() {
     "${srcdir}/${_tarname}"
 }
 
-
-
 prepare() {
   _android_quirk
 }
@@ -498,7 +495,7 @@ package() {
   if [[ -d "npm" ]]; then
     cd \
       "npm/${_platform}"
-    _tgz="${_pub}-${_pkg}-${_platform}-${_binary_pkgver}.tgz"
+    _tgz="${_pub}-${_pkg}-${_platform}-${_pkgver}.tgz"
     ls \
       -lsh
     npm \
