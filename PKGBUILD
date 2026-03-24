@@ -494,7 +494,7 @@ package() {
     "${srcdir}/${_tarname}"
   ls \
     -lsh
-  if [[ -e "solidity-analyzer.${_platform}.node" ]]; then
+  if [[ -d "npm" ]]; then
     cd \
       "npm/${_platform}"
     _tgz="${_pub}-${_pkg}-${_platform}-${_pkgver}.tgz"
