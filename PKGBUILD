@@ -77,6 +77,7 @@ if [[ ! -v "_pub" ]]; then
   if [[ "${_os}" == "Android" ]]; then
     _pub="nomicfoundation"
   fi
+  _pub="themartiancompany"
 fi
 if [[ ! -v "_ns" ]]; then
   _ns="NomicFoundation"
@@ -86,6 +87,14 @@ fi
 if [[ "${_os}" == "Android" ]]; then
   if [[ "${_arch}" == "armv7l" ]]; then
     _platform="android-arm-eabi"
+  fi
+elif [[ "${_os}" == "GNU/Linux" ]]; then
+  if [[ "${_arch}" == "x86_64" ]]; then
+    _platform="gnu"
+  fi
+elif [[ "${_os}" == "Msys" ]]; then
+  if [[ "${_arch}" == "x86_64" ]]; then
+    _platform="windows"
   fi
 fi
 if [[ ! -v "_archive_format" ]]; then
@@ -121,7 +130,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=19
+pkgrel=20
 arch=(
   'aarch64'
   'arm'
@@ -395,8 +404,14 @@ build() {
     "${_yarn[@]}" \
       run \
         build )
-  if [[ "${_os}" == "Android" ]] && \
-     [[ "${_arch}" == "armv7l" ]]; then
+  ls \
+    -lsh
+  if [[ -e "solidity-analyzer.${_platform}.node" ]]; then
+    if [[ "${_os}" == "Android" && \
+          "${_arch}" == "armv7l" ]]; then
+      echo \
+        "Android ARM 32 build."
+    fi
     mv \
       "solidity-analyzer.${_platform}.node" \
       "npm/${_platform}" || \
@@ -434,12 +449,13 @@ package() {
         "${_tgz}"
     cd \
       "${srcdir}/${_tarname}"
+  else
+    _tgz="${_pub}-${_pkg}-${_pkgver}.tgz"
+    npm \
+      "${_npm_options[@]}" \
+      install \
+        "${_tgz}"
   fi
-  _tgz="${_pub}-${_pkg}-${_pkgver}.tgz"
-  npm \
-    "${_npm_options[@]}" \
-    install \
-      "${_tgz}"
 }
 
 # vim:set sw=2 sts=-1 et:
