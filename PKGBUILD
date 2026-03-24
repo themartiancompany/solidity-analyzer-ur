@@ -121,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1"
 _commit="55a88c2957de8f93af3bb135187fc2c7a0973291"
-pkgrel=12
+pkgrel=13
 arch=(
   'aarch64'
   'arm'
@@ -340,7 +340,7 @@ build() {
         "yarn"
     )
   fi
-  "${yarn[@]}" \
+  "${_yarn[@]}" \
     install \
     . || \
     true
