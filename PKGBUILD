@@ -121,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=13
+pkgrel=14
 arch=(
   'aarch64'
   'arm'
@@ -172,8 +172,8 @@ _bundle_sum="SKIP"
 _bundle_sig_sum="SKIP"
 _gitlab_sum="SKIP"
 _gitlab_sig_sum="SKIP"
-_github_sum="31a540388e9fd4e54e6a5c7ef0ff8ed042a404994519212e2524a93a2a282254"
-_github_sig_sum="759ca10e04885ad220ec4856fdb6a54a2cdad02442b9c3519b4a6a656c96b54e"
+_github_sum="a9722d5b554215deef6b2a190995e9937647173411d577f277bb00c481fec8d9"
+_github_sig_sum="e35f0b9b378453f0edabb0282a39dfd2de2b8161d0262b44462c8fb2e4ccca6a"
 if [[ "${_git_service}" == "github" ]]; then
   _evmfs_sum="${_github_sum}"
   _evmfs_sig_sum="${_github_sig_sum}"
