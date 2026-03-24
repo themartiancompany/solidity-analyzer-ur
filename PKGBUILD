@@ -140,7 +140,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=25
+pkgrel=26
 arch=(
   'aarch64'
   'arm'
@@ -410,11 +410,18 @@ build() {
     if [[ -e "yarn.lock" ]]; then
       rm \
         "yarn.lock"
+      "${_yarn[@]}" \
+        up || \
+      true
+      "${_yarn[@]}" \
+        install || \
+      true
     fi
+  else
+    "${_yarn[@]}" \
+      install || \
+      true
   fi
-  "${_yarn[@]}" \
-    install || \
-    true
   npm \
     install \
     --package-lock-only || \
