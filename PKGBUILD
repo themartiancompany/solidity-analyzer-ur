@@ -140,7 +140,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=22
+pkgrel=24
 arch=(
   'aarch64'
   'arm'
@@ -373,7 +373,11 @@ prepare() {
 
 build() {
   local \
+    _os \
     _yarn
+  _os="$(
+    uname \
+      -o)"
   _yarn=( "$(
     command \
       -v \
@@ -402,8 +406,14 @@ build() {
         "yarn"
     )
   fi
+  if [[ "${_os}" == "Msys" ]]; then
+    if [[ -e "yarn.lock" ]]; then
+      rm \
+        "yarn.lock"
+    fi
+  fi
   "${_yarn[@]}" \
-    up || \
+    install || \
     true
   npm \
     install \

@@ -887,6 +887,15 @@ jobs:
       - name:
           Builds the Android package.
         run: |
+          arch="$(uname -m)" \
+          _evmfs="false" \
+          _git="false" \
+          _git_service="github" \
+          /entrypoint.sh \
+            recipe-get \
+              -v \
+              "PKGBUILD" \
+              "pkgbase")"
           export \
             _arch="$( \
               uname \
@@ -906,15 +915,8 @@ jobs:
             mkdir \
               -p \
               "${HOME}/${_pkgbase}-build" && \
-          _arch="$( \
-            uname \
-              -m)" && \
-          if [[ "${_arch}" == "armv8l" ]]; then \
-            _arch="arm"; \
-          fi && \
           /entrypoint.sh \
             TERMUX_VERSION=50 \
-            arch="${_arch}" \
             _evmfs="false" \
             _git="false" \
             _git_service="github" \
@@ -923,7 +925,6 @@ jobs:
               "PKGBUILD" \
               "source" && \
           /entrypoint.sh \
-            arch="${_arch}" \
             TERMUX_VERSION=50 \
             _evmfs="false" \
             _git="false" \
@@ -931,10 +932,14 @@ jobs:
             recipe-get \
               -v \
               "PKGBUILD" \
-              "sha256sums" && \
+              "sha256sums"
+          _pkgbase="$( \
+            /entrypoint.sh \
+              recipe-get \
+                "PKGBUILD" \
+                "pkgbase")" && \
           /entrypoint.sh \
             TERMUX_VERSION=50 \
-            arch="${_arch}" \
             _evmfs="false" \
             _git="false" \
             _git_service="github" \
