@@ -142,7 +142,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1.1"
 _commit="20f7123702864dd1b86081538e4ca9d00b85a153"
-pkgrel=35
+pkgrel=36
 arch=(
   'aarch64'
   'arm'
@@ -498,6 +498,8 @@ package() {
     cd \
       "npm/${_platform}"
     _tgz="${_pub}-${_pkg}-${_platform}-${_pkgver}.tgz"
+    ls \
+      -lsh
     npm \
       "${_npm_options[@]}" \
       install \
