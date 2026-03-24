@@ -142,7 +142,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1.1"
 _commit="20f7123702864dd1b86081538e4ca9d00b85a153"
-pkgrel=33
+pkgrel=34
 arch=(
   'aarch64'
   'arm'
