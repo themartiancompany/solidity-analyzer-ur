@@ -140,9 +140,10 @@ _pkgdesc=(
 )
 pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
+_binary_pkgver="0.1.1"
 pkgver="${_pkgver}.1.1.1.1"
 _commit="20f7123702864dd1b86081538e4ca9d00b85a153"
-pkgrel=36
+pkgrel=37
 arch=(
   'aarch64'
   'arm'
@@ -497,7 +498,7 @@ package() {
   if [[ -d "npm" ]]; then
     cd \
       "npm/${_platform}"
-    _tgz="${_pub}-${_pkg}-${_platform}-${_pkgver}.tgz"
+    _tgz="${_pub}-${_pkg}-${_platform}-${_binary_pkgver}.tgz"
     ls \
       -lsh
     npm \
