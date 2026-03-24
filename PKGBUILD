@@ -128,8 +128,10 @@ if [[ ! -v "_archive_format" ]]; then
 fi
 _node="nodejs"
 _pkg=solidity-analyzer
-_pkgbase="${_pkg}"
-pkgname="${_pkgbase}"
+pkgbase="${_pkg}"
+pkgname=(
+  "${pkgbase}"
+)
 _pkgdesc=(
   'API library built in Rust,'
   'which exposes a single function,'
@@ -140,7 +142,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=26
+pkgrel=27
 arch=(
   'aarch64'
   'arm'
@@ -152,7 +154,7 @@ arch=(
   'pentium4'
   'x86_64'
 )
-url="https://${_git_service}.com/${_ns}/${_pkgbase}"
+url="https://${_git_service}.com/${_ns}/${_pkg}"
 license=(
   'custom'
 )
@@ -164,6 +166,16 @@ makedepends=(
   'rust'
   'yarn'
 )
+if [[ "${_evmfs}" == "true" ]]; then
+  makedepends+=(
+    "evmfs"
+  )
+fi
+if [[ "${_git}" == "true" ]]; then
+  makedepends+=(
+    "git"
+  )
+fi
 provides=(
   "${_node}-${_pkg}=${pkgver}"
 )
@@ -182,10 +194,10 @@ elif [[ "${_npm}" == "false" ]]; then
   _tag="${_commit}"
   _tag_name="commit"
 fi
-_tarname="${pkgname}-${_tag}"
+_tarname="${_pkg}-${_tag}"
 _tarfile="${_tarname}.${_archive_format}"
 if [[ "${_offline}" == "true" ]]; then
-  _url="file://${HOME}/${pkgname}"
+  _url="file://${HOME}/${_pkg}"
 fi
 _bundle_sum="SKIP"
 _bundle_sig_sum="SKIP"
