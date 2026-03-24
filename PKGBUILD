@@ -87,23 +87,23 @@ fi
 if [[ ! -v "_platform" ]]; then
   if [[ "${_os}" == "Android" ]]; then
     if [[ "${_arch}" == "aarch64" ]]; then
-      _platform="android-arm-eabi"
+      _platform="android-arm64"
     elif [[ "${_arch}" == "armv8l" ]]; then
-      _platform="android-aarch64"
+      _platform="android-arm-eabi"
     elif [[ "${_arch}" == "armv7l" ]]; then
       _platform="android-arm-eabi"
     elif [[ "${_arch}" == "i686" ]]; then
-      _platform="android-x86_64"
+      _platform="android-ia32"
     elif [[ "${_arch}" == "x86_64" ]]; then
-      _platform="android-x86_64"
+      _platform="android-x64"
     fi
   elif [[ "${_os}" == "GNU/Linux" ]]; then
     if [[ "${_arch}" == "x86_64" ]]; then
-      _platform="gnu-x86_64"
+      _platform="linux-x64-gnu"
     fi
   elif [[ "${_os}" == "Msys" ]]; then
     if [[ "${_arch}" == "x86_64" ]]; then
-      _platform="windows-x86_64"
+      _platform="win32-x64-msvc"
     fi
   fi
 fi
@@ -140,8 +140,8 @@ _pkgdesc=(
 )
 pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
-pkgver="${_pkgver}.1.1.1"
-_commit="a45f6027efccc03125160aff83e582f37a3f11c0"
+pkgver="${_pkgver}.1.1.1.1"
+_commit="20f7123702864dd1b86081538e4ca9d00b85a153"
 pkgrel=31
 arch=(
   'aarch64'
@@ -203,8 +203,8 @@ _bundle_sum="SKIP"
 _bundle_sig_sum="SKIP"
 _gitlab_sum="SKIP"
 _gitlab_sig_sum="SKIP"
-_github_sum="a9722d5b554215deef6b2a190995e9937647173411d577f277bb00c481fec8d9"
-_github_sig_sum="e35f0b9b378453f0edabb0282a39dfd2de2b8161d0262b44462c8fb2e4ccca6a"
+_github_sum="4f87d6e48127bc28c6f59e13b8df0b4e71e3e64cd72b854cf01b110bb5667935"
+_github_sig_sum="70cf3ffa9d9ab410d86cb8627d3722bb2faf1a7c7326251aca39117f92a462d8"
 if [[ "${_git_service}" == "github" ]]; then
   _evmfs_sum="${_github_sum}"
   _evmfs_sig_sum="${_github_sig_sum}"
