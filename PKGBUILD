@@ -510,7 +510,6 @@ package() {
     "${_npm_options[@]}" \
     install \
       "${_tgz}"
-  fi
 }
 
 # vim:set sw=2 sts=-1 et:
