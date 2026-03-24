@@ -103,7 +103,7 @@ if [[ ! -v "_platform" ]]; then
     fi
   elif [[ "${_os}" == "Msys" ]]; then
     if [[ "${_arch}" == "x86_64" ]]; then
-      _platform="win32-x64-msvc"
+      _platform="win32-x64-gnu"
     fi
   fi
 fi
@@ -141,9 +141,9 @@ _pkgdesc=(
 pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 _binary_pkgver="0.1.1"
-pkgver="${_pkgver}.1.1.1.1.1.1"
-_commit="b619c293b11271256b3d781552e6632b43395855"
-pkgrel=2
+pkgver="${_pkgver}.1.1.1.1.1.1.1"
+_commit="e05173b7b93c5636d832cb52a00704b5a0f2d142"
+pkgrel=3
 arch=(
   'aarch64'
   'arm'
@@ -204,8 +204,8 @@ _bundle_sum="SKIP"
 _bundle_sig_sum="SKIP"
 _gitlab_sum="SKIP"
 _gitlab_sig_sum="SKIP"
-_github_sum="202dd9ee83491521cf7d2903dc884aeeeb60ee04418c4cbf7e1b1339a1141ed9"
-_github_sig_sum="48e59f3987677d17f50c2a4b3907a083d789395f9914f39a567d021d4d915c79"
+_github_sum="5aeb2fb1523ff4e2fbeb1963f10f4fa44624609600ea51e68c47e3341c9e48c9"
+_github_sig_sum="65a947acd46dd65b6cd9d31657a3ef7462ecd66920fef6ff6a2451e7dffee60c"
 if [[ "${_git_service}" == "github" ]]; then
   _evmfs_sum="${_github_sum}"
   _evmfs_sig_sum="${_github_sig_sum}"
