@@ -121,7 +121,7 @@ pkgdesc="${_pkgdesc[*]}"
 _pkgver="0.1.2"
 pkgver="${_pkgver}.1.1.1"
 _commit="a45f6027efccc03125160aff83e582f37a3f11c0"
-pkgrel=14
+pkgrel=15
 arch=(
   'aarch64'
   'arm'
@@ -319,12 +319,13 @@ _msys_quirk() {
     _compiler
   cd \
     "${srcdir}/${_tarname}"
-  if [[ "${_os}" == "Android" ]] && \
-     [[ "${_arch}" == "armv7l" ]]; then
+  if [[ "${_os}" == "Msys" ]]; then
     _clang="$( \
       command \
         -v \
         gcc)"
+    ls \
+      "undefined/toolchains/llvm-prebuilt"
     _tools_bin="undefined/toolchains/llvm/prebuilt/linux-x86_64/bin"
     _compiler_dir="${srcdir}/${_tarname}/${_tools_bin}"
     _compiler="${_compiler_dir}/armv7a-linux-androideabi24-clang"
@@ -373,8 +374,7 @@ build() {
     )
   fi
   "${_yarn[@]}" \
-    install \
-    . || \
+    install || \
     true
   npm \
     install \
